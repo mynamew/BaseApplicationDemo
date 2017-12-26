@@ -319,6 +319,9 @@ public abstract class BaseActivity extends AppCompatActivity  {
     public void setEdittextListener(final EditText editText, int editCode, @StringRes final int tipPleaseInputId, @StringRes final int tipLengthId, final EdittextInputListener listener) {
         //存储输入框
         edits.put(editCode, editText);
+        /**
+         * pda 扫描枪的返回事件
+         */
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -348,6 +351,22 @@ public abstract class BaseActivity extends AppCompatActivity  {
 
                 }
                 return false;
+            }
+        });
+        /**
+         * 单击 选中
+         */
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                    editText.findFocus();
+                    editText.setSelectAllOnFocus(true);
+                    Selection.selectAll(editText.getText());
+                }
             }
         });
     }
